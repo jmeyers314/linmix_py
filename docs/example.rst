@@ -60,7 +60,7 @@ We can sanity check our samples by overplotting a histogram with the probability
     ax = fig.add_subplot(111)
     x = np.arange(-5,5, 0.01)
     ax.plot(x, pxi(x))
-    ax.hist(xi, 10, range=(-6,6), normed=True)
+    ax.hist(xi, 10, range=(-6,6), density=True)
     ax.set_xlabel(r"$\xi$")
     ax.set_ylabel(r"$P(\xi)$")
     plt.show()
