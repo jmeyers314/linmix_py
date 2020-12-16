@@ -1,4 +1,5 @@
 # linmix
+## This fork contains small fixes for my (and maybe your) convenience
 ### A Bayesian approach to linear regression with errors in both X and Y.
 
 Python port of B. Kelly's LINMIX_ERR IDL package

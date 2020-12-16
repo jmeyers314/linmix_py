@@ -198,9 +198,13 @@ class Chain(object):
 
     def update_G(self):  # Step 5
         # Eqn (74)
-        piNp = self.pi * (1.0/np.sqrt(2.0*np.pi*self.tausqr)
-                          * np.exp(-0.5 * (self.xi[:, np.newaxis] - self.mu)**2 / self.tausqr))
-        q_ki = piNp / np.sum(piNp, axis=1)[:, np.newaxis]
+        piNp = self.pi * (1.0 / np.sqrt(2.0 * np.pi * self.tausqr)
+                          * np.exp(-0.5 * (self.xi[:, np.newaxis] - self.mu) ** 2 / self.tausqr))
+
+        sum_piNp = np.sum(piNp, axis=1)[:, np.newaxis]
+        q_ki = piNp
+        for i in range(self.N):
+           q_ki[i] = q_ki[i] / sum_piNp[i] if sum_piNp[i] != 0 else 0
         # Eqn (73)
         for i in range(self.N):
             self.G[i] = self.rng.multinomial(1, q_ki[i])
@@ -281,9 +285,9 @@ class Chain(object):
         self.chain_dtype = [('alpha', float),
                             ('beta', float),
                             ('sigsqr', float),
-                            ('pi', (float, self.K)),
-                            ('mu', (float, self.K)),
-                            ('tausqr', (float, self.K)),
+                            ('pi', (float, (self.K,))),
+                            ('mu', (float, (self.K,))),
+                            ('tausqr', (float, (self.K,))),
                             ('mu0', float),
                             ('usqr', float),
                             ('wsqr', float),
